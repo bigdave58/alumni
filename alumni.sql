@@ -2,15 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `alumni` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `alumni` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`FormerStudents`
+-- Table `alumni`.`FormerStudents`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`FormerStudents` ;
+DROP TABLE IF EXISTS `alumni`.`FormerStudents` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`FormerStudents` (
+CREATE TABLE IF NOT EXISTS `alumni`.`FormerStudents` (
   `idStudents` VARCHAR(12) NOT NULL,
   `lname` VARCHAR(45) NOT NULL,
   `fname` VARCHAR(45) NULL,
@@ -24,11 +24,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Course`
+-- Table `alumni`.`Course`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Course` ;
+DROP TABLE IF EXISTS `alumni`.`Course` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Course` (
+CREATE TABLE IF NOT EXISTS `alumni`.`Course` (
   `programCode` VARCHAR(8) NOT NULL,
   `programTitle` VARCHAR(50) NULL,
   PRIMARY KEY (`programCode`))
@@ -36,11 +36,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`StudentsCourse`
+-- Table `alumni`.`StudentsCourse`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`StudentsCourse` ;
+DROP TABLE IF EXISTS `alumni`.`StudentsCourse` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`StudentsCourse` (
+CREATE TABLE IF NOT EXISTS `alumni`.`StudentsCourse` (
   `formerStudents_idStudents` VARCHAR(12) NOT NULL,
   `course_programCode` VARCHAR(8) NOT NULL,
   `date` DATETIME NULL,
@@ -49,23 +49,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`StudentsCourse` (
   INDEX `fk_formerStudents_has_course_formerStudents_idx` (`formerStudents_idStudents` ASC),
   CONSTRAINT `fk_formerStudents_has_course_formerStudents`
     FOREIGN KEY (`formerStudents_idStudents`)
-    REFERENCES `mydb`.`FormerStudents` (`idStudents`)
+    REFERENCES `alumni`.`FormerStudents` (`idStudents`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_formerStudents_has_course_course1`
     FOREIGN KEY (`course_programCode`)
-    REFERENCES `mydb`.`Course` (`programCode`)
+    REFERENCES `alumni`.`Course` (`programCode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Employer`
+-- Table `alumni`.`Employer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Employer` ;
+DROP TABLE IF EXISTS `alumni`.`Employer` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Employer` (
+CREATE TABLE IF NOT EXISTS `alumni`.`Employer` (
   `idemployer` INT NOT NULL AUTO_INCREMENT,
   `companyTitle` VARCHAR(60) NOT NULL,
   `contactNumber` VARCHAR(12) NOT NULL,
@@ -81,11 +81,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`StudentsEmployer`
+-- Table `alumni`.`StudentsEmployer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`StudentsEmployer` ;
+DROP TABLE IF EXISTS `alumni`.`StudentsEmployer` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`StudentsEmployer` (
+CREATE TABLE IF NOT EXISTS `alumni`.`StudentsEmployer` (
   `formerStudents_idStudents` VARCHAR(12) NOT NULL,
   `employer_idemployer` INT NOT NULL,
   ` empStatus` TINYINT(1) NULL,
@@ -100,12 +100,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`StudentsEmployer` (
   INDEX `fk_formerStudents_has_employer_formerStudents1_idx` (`formerStudents_idStudents` ASC),
   CONSTRAINT `fk_formerStudents_has_employer_formerStudents1`
     FOREIGN KEY (`formerStudents_idStudents`)
-    REFERENCES `mydb`.`FormerStudents` (`idStudents`)
+    REFERENCES `alumni`.`FormerStudents` (`idStudents`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_formerStudents_has_employer_employer1`
     FOREIGN KEY (`employer_idemployer`)
-    REFERENCES `mydb`.`Employer` (`idemployer`)
+    REFERENCES `alumni`.`Employer` (`idemployer`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
